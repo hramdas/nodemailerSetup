@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- <script src="index.js"></script> -->
+</head>
+<body>
+
+    <form onsubmit="emailSend(); return false">
+        <input placeholder="To" id='to' type="email">
+        <input placeholder="subject" id='subject' type="text">
+        <input placeholder="text" id='text' type="text">
+        <button>Send</button>
+    </form>
+    
+</body>
+</html>
+
+<script>
+
+    async function emailSend(){
+        //e.preveventDefault();
+        let to = document.getElementById('to').value
+        let subject = document.getElementById('subject').value
+        let text = document.getElementById('text').value;
+
+        fetch("http://localhost:2200/users",{
+            "method" : "POST",
+            "headers" : {
+                "content-type" : "application/json"
+            },
+            "body": JSON.stringify({
+                to,
+                subject,
+                text
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Email send to ' + to)
+        })  
+    } setTimeout(3000, emailSend)
+
+</script>
